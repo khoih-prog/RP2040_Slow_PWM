@@ -1,6 +1,6 @@
 {
   "name": "RP2040_Slow_PWM",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": "timing, device, control, hardware-timer, pwm, ISR-based-pwm, multi-channel-pwm, low-frequency-pwm, mission-critical, accuracy, non-blocking, arduino-pico, rpi-pico, rp2040, nano-rp2040-connect, raspberry-pi-pico, precise",
   "description": "This library enables you to use ISR-based PWM channels on RP2040-based boards, such as ADAFRUIT_FEATHER_RP2040, RASPBERRY_PI_PICO, with arduino-pico core to create and output PWM any GPIO pin. The most important feature is they're ISR-based PWM channels, supporting lower PWM frequencies with suitable accuracy. Their executions are not blocked by bad-behaving functions or tasks. This important feature is absolutely necessary for mission-critical tasks. These ISR-based PWMs, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software-based PWM using millis() or micros(). That's necessary if you need to control devices requiring high precision",
   "authors":
@@ -23,7 +23,7 @@
     ]
   },
   "frameworks": "*",
-  "platforms": ["rp2040"],
+  "platforms": ["raspberrypi"],
   "examples": "examples/*/*/*.ino",
   "license": "MIT"
 }

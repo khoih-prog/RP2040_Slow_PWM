@@ -12,12 +12,17 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.0.1](#Releases-v101)
   * [Initial Releases v1.0.0](#Initial-Releases-v100)
 
 ---
 ---
 
 ## Changelog
+
+### Releases v1.0.1
+
+1. Fix platform in `library.json`
 
 ### Initial Releases v1.0.0
 

@@ -826,7 +826,7 @@ The following is the sample terminal output when running example [ISR_16_PWMs_Ar
 
 ```
 Starting ISR_16_PWMs_Array_Complex on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.0
+RP2040_Slow_PWM v1.0.1
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20
@@ -892,7 +892,7 @@ The following is the sample terminal output when running example [**ISR_16_PWMs_
 
 ```
 Starting ISR_16_PWMs_Array on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.0
+RP2040_Slow_PWM v1.0.1
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20
@@ -923,7 +923,7 @@ The following is the sample terminal output when running example [**ISR_16_PWMs_
 
 ```
 Starting ISR_16_PWMs_Array_Simple on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.0
+RP2040_Slow_PWM v1.0.1
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20

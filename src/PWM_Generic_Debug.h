@@ -12,11 +12,12 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.0
+  Version: 1.0.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      22/09/2021 Initial coding for RP2040-based boards using RP2040 arduino-pico core
+  1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
  *****************************************************************************************************************************/
 
 #pragma once
