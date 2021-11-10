@@ -12,12 +12,13 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.1
+  Version: 1.1.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      22/09/2021 Initial coding for RP2040-based boards using RP2040 arduino-pico core
   1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
+  1.1.0   K Hoang      10/11/2021 Add functions to modify PWM settings on-the-fly
 *****************************************************************************************************************************/
 
 #pragma once
@@ -30,7 +31,7 @@
 #endif
 
 #ifndef RP2040_SLOW_PWM_VERSION
-  #define RP2040_SLOW_PWM_VERSION       "RP2040_Slow_PWM v1.0.1"
+  #define RP2040_SLOW_PWM_VERSION       "RP2040_Slow_PWM v1.1.0"
 #endif
 
 #ifndef _PWM_LOGLEVEL_
@@ -82,42 +83,71 @@ class RP2040_Slow_PWM_ISR
     
     //////////////////////////////////////////////////////////////////
     // PWM
-    void setPWM(uint32_t pin, uint32_t frequency, uint32_t dutycycle, timer_callback StartCallback = nullptr,
+    // Return the channelNum if OK, -1 if error
+    int setPWM(uint32_t pin, double frequency, uint32_t dutycycle, timer_callback StartCallback = nullptr, 
                 timer_callback StopCallback = nullptr)
     {
       uint32_t period = 0;
       
-      if ( ( frequency != 0 ) && ( frequency <= 1000 ) )
+     if ( ( frequency != 0 ) && ( frequency <= 1000 ) )
       {
 #if USING_MICROS_RESOLUTION
       // period in us
-      period = 1000000 / frequency;
+      period = 1000000.0f / frequency;
 #else    
       // period in ms
-      period = 1000 / frequency;
+      period = 1000.0f / frequency;
 #endif
       }
       else
       {       
-        PWM_LOGERROR("Error: Invalid frequency, max is 500Hz");
+        PWM_LOGERROR("Error: Invalid frequency, max is 1000Hz");
+        
+        return -1;
       }
       
-      setupPWMChannel(pin, period, dutycycle, (void *) StartCallback, (void *) StopCallback);     
+      return setupPWMChannel(pin, period, dutycycle, (void *) StartCallback, (void *) StopCallback);   
     }
 
-#if USING_MICROS_RESOLUTION
-    //period in us
-    void setPWM_Period(uint32_t pin, uint32_t period, uint32_t dutycycle, timer_callback StartCallback = nullptr,
-                       timer_callback StopCallback = nullptr)
-#else    
-    // PWM
-    //period in ms
-    void setPWM_Period(uint32_t pin, uint32_t period, uint32_t dutycycle, timer_callback StartCallback = nullptr,
-                       timer_callback StopCallback = nullptr)
-#endif    
+    // period in us
+    // Return the channelNum if OK, -1 if error
+    int setPWM_Period(uint32_t pin, uint32_t period, uint32_t dutycycle, timer_callback StartCallback = nullptr,
+                       timer_callback StopCallback = nullptr)  
     {     
-      setupPWMChannel(pin, period, dutycycle, (void *) StartCallback, (void *) StopCallback);       
-    }    
+      return setupPWMChannel(pin, period, dutycycle, (void *) StartCallback, (void *) StopCallback);      
+    } 
+    
+    //////////////////////////////////////////////////////////////////
+    
+    // low level function to modify a PWM channel
+    // returns the true on success or false on failure
+    bool modifyPWMChannel(unsigned channelNum, uint32_t pin, double frequency, uint32_t dutycycle)
+    {
+      uint32_t period = 0;
+      
+      if ( ( frequency > 0 ) && ( frequency <= 1000 ) )
+      {
+#if USING_MICROS_RESOLUTION
+      // period in us
+      period = 1000000.0f / frequency;
+#else    
+      // period in ms
+      period = 1000.0f / frequency;
+#endif
+      }
+      else
+      {       
+        PWM_LOGERROR("Error: Invalid frequency, max is 1000Hz");
+        return false;
+      }
+      
+      return modifyPWMChannel_Period(channelNum, pin, period, dutycycle);
+    }
+    
+    //////////////////////////////////////////////////////////////////
+    
+    //period in us
+    bool modifyPWMChannel_Period(unsigned channelNum, uint32_t pin, uint32_t period, uint32_t dutycycle);
     
     //////////////////////////////////////////////////////////////////
 

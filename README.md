@@ -28,14 +28,18 @@
   * [1. Init Hardware Timer](#1-init-hardware-timer)
   * [2. Set PWM Frequency, dutycycle, attach irqCallbackStartFunc and irqCallbackStopFunc functions](#2-Set-PWM-Frequency-dutycycle-attach-irqCallbackStartFunc-and-irqCallbackStopFunc-functions)
 * [Examples](#examples)
-  * [  1. ISR_16_PWMs_Array](examples/ISR_16_PWMs_Array)
-  * [  2. ISR_16_PWMs_Array_Complex](examples/ISR_16_PWMs_Array_Complex)
-  * [  3. ISR_16_PWMs_Array_Simple](examples/ISR_16_PWMs_Array_Simple)
+  * [ 1. ISR_16_PWMs_Array](examples/ISR_16_PWMs_Array)
+  * [ 2. ISR_16_PWMs_Array_Complex](examples/ISR_16_PWMs_Array_Complex)
+  * [ 3. ISR_16_PWMs_Array_Simple](examples/ISR_16_PWMs_Array_Simple)
+  * [ 4. ISR_Changing_PWM](examples/ISR_Changing_PWM)
+  * [ 5. ISR_Modify_PWM](examples/ISR_Modify_PWM)
 * [Example ISR_16_PWMs_Array_Complex](#Example-ISR_16_PWMs_Array_Complex)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. ISR_16_PWMs_Array_Complex on RASPBERRY_PI_PICO](#1-ISR_16_PWMs_Array_Complex-on-RASPBERRY_PI_PICO)
   * [2. ISR_16_PWMs_Array on RASPBERRY_PI_PICO](#2-ISR_16_PWMs_Array-on-RASPBERRY_PI_PICO)
   * [3. ISR_16_PWMs_Array_Simple on RASPBERRY_PI_PICO](#3-ISR_16_PWMs_Array_Simple-on-RASPBERRY_PI_PICO)
+  * [4. ISR_Modify_PWM on RASPBERRY_PI_PICO](#4-ISR_Modify_PWM-on-RASPBERRY_PI_PICO)
+  * [5. ISR_Changing_PWM on RASPBERRY_PI_PICO](#5-ISR_Changing_PWM-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -114,7 +118,7 @@ The catch is **your function is now part of an ISR (Interrupt Service Routine), 
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.16+` for Arduino](https://www.arduino.cc/en/Main/Software)
- 2. [**Earle Philhower's arduino-pico core v1.9.5+**](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 2. [**Earle Philhower's arduino-pico core v1.9.6+**](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
  3. To use with certain example
    - [`SimpleTimer library`](https://github.com/jfturcot/SimpleTimer) for [ISR_16_PWMs_Array_Complex example](examples/ISR_16_PWMs_Array_Complex).
@@ -241,7 +245,9 @@ void setup()
 
  1. [ISR_16_PWMs_Array](examples/ISR_16_PWMs_Array)
  2. [ISR_16_PWMs_Array_Complex](examples/ISR_16_PWMs_Array_Complex)
- 3. [ISR_16_PWMs_Array_Simple](examples/ISR_16_PWMs_Array_Simple) 
+ 3. [ISR_16_PWMs_Array_Simple](examples/ISR_16_PWMs_Array_Simple)
+ 4. [ISR_Changing_PWM](examples/ISR_Changing_PWM)
+ 5. [ISR_Modify_PWM](examples/ISR_Modify_PWM)
 
  
 ---
@@ -383,12 +389,11 @@ uint32_t PWM_Period[NUMBER_ISR_PWMS] =
    111111L,   100000L,    66667L,    50000L,    40000L,   33333L,     25000L,    20000L
 };
 
-
 // You can assign any interval for any timer here, in Hz
-uint32_t PWM_Freq[NUMBER_ISR_PWMS] =
+double PWM_Freq[NUMBER_ISR_PWMS] =
 {
-  1,  2,  3,  4,  5,  6,  7,  8,
-  9, 10, 15, 20, 25, 30, 40, 50
+  1.0f,  2.0f,  3.0f,  4.0f,  5.0f,  6.0f,  7.0f,  8.0f,
+  9.0f, 10.0f, 15.0f, 20.0f, 25.0f, 30.0f, 40.0f, 50.0f
 };
 
 // You can assign any interval for any timer here, in milliseconds
@@ -826,7 +831,7 @@ The following is the sample terminal output when running example [ISR_16_PWMs_Ar
 
 ```
 Starting ISR_16_PWMs_Array_Complex on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.1
+RP2040_Slow_PWM v1.1.0
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20
@@ -892,7 +897,7 @@ The following is the sample terminal output when running example [**ISR_16_PWMs_
 
 ```
 Starting ISR_16_PWMs_Array on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.1
+RP2040_Slow_PWM v1.1.0
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20
@@ -923,7 +928,7 @@ The following is the sample terminal output when running example [**ISR_16_PWMs_
 
 ```
 Starting ISR_16_PWMs_Array_Simple on RASPBERRY_PI_PICO
-RP2040_Slow_PWM v1.0.1
+RP2040_Slow_PWM v1.1.0
 [PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
 [PWM] _count = 0 - 20
 [PWM] add_repeating_timer_us = 20
@@ -946,6 +951,47 @@ Channel : 14	Period : 25000		OnTime : 22500	Start_Time : 2782034
 Channel : 15	Period : 20000		OnTime : 19000	Start_Time : 2782034
 ```
 
+---
+
+### 4. ISR_Modify_PWM on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [ISR_Modify_PWM](examples/ISR_Modify_PWM) on **RASPBERRY_PI_PICO** to demonstrate how to modify PWM settings on-the-fly without deleting the PWM channel
+
+```
+Starting ISR_Modify_PWM on RASPBERRY_PI_PICO
+RP2040_Slow_PWM v1.1.0
+[PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
+[PWM] _count = 0 - 20
+[PWM] add_repeating_timer_us = 20
+Starting ITimer OK, micros() = 3408786
+Using PWM Freq = 1.00, PWM DutyCycle = 10
+Channel : 0	Period : 1000000		OnTime : 100000	Start_Time : 3409859
+Channel : 0	Period : 500000		OnTime : 450000	Start_Time : 13411056
+Channel : 0	Period : 1000000		OnTime : 100000	Start_Time : 23412028
+```
+
+---
+
+### 5. ISR_Changing_PWM on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [ISR_Changing_PWM](examples/ISR_Changing_PWM) on **RASPBERRY_PI_PICO** to demonstrate how to modify PWM settings on-the-fly by deleting the PWM channel and reinit the PWM channel
+
+```
+Starting ISR_Changing_PWM on RASPBERRY_PI_PICO
+RP2040_Slow_PWM v1.1.0
+[PWM] RP2040_TimerInterrupt: _timerNo = 0 , _fre = 1000000.00
+[PWM] _count = 0 - 20
+[PWM] add_repeating_timer_us = 20
+Starting ITimer OK, micros() = 3278640
+Using PWM Freq = 1.00, PWM DutyCycle = 50
+Channel : 0	Period : 1000000		OnTime : 500000	Start_Time : 3279470
+Using PWM Freq = 2.00, PWM DutyCycle = 90
+Channel : 0	Period : 500000		OnTime : 450000	Start_Time : 13280864
+Using PWM Freq = 1.00, PWM DutyCycle = 50
+Channel : 0	Period : 1000000		OnTime : 500000	Start_Time : 23282139
+Using PWM Freq = 2.00, PWM DutyCycle = 90
+Channel : 0	Period : 500000		OnTime : 450000	Start_Time : 33283350
+```
 
 ---
 ---
@@ -990,6 +1036,7 @@ Submit issues to: [RP2040_Slow_PWM issues](https://github.com/khoih-prog/RP2040_
 
 1. Basic hardware multi-channel PWM for **RP2040-based RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, etc.** using [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
 2. Add Table of Contents
+3. Add functions to modify PWM settings on-the-fly
 
 ---
 ---
