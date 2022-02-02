@@ -30,7 +30,7 @@ void setup()
   Serial.println("\nStart multiFileProject");
   Serial.println(RP2040_SLOW_PWM_VERSION);
 
-#if 0   //defined(RP2040_SLOW_PWM_VERSION_MIN)
+#if defined(RP2040_SLOW_PWM_VERSION_MIN)
   if (RP2040_SLOW_PWM_VERSION_INT < RP2040_SLOW_PWM_VERSION_MIN)
   {
     Serial.print("Warning. Must use this example on Version equal or later than : ");
