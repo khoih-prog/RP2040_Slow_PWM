@@ -72,9 +72,9 @@ bool TimerHandler(struct repeating_timer *t)
 uint32_t PWM_Pin    = LED_BUILTIN;
 
 // You can assign any interval for any timer here, in Hz
-double PWM_Freq1   = 1.0f;
+float PWM_Freq1   = 1.0f;
 // You can assign any interval for any timer here, in Hz
-double PWM_Freq2   = 2.0f;
+float PWM_Freq2   = 2.0f;
 
 // You can assign any interval for any timer here, in microseconds
 uint32_t PWM_Period1 = 1000000 / PWM_Freq1;
@@ -82,9 +82,9 @@ uint32_t PWM_Period1 = 1000000 / PWM_Freq1;
 uint32_t PWM_Period2 = 1000000 / PWM_Freq2;
 
 // You can assign any duty_cycle for any PWM here, from 0-100
-uint32_t PWM_DutyCycle1  = 10;
+float PWM_DutyCycle1  = 50.0;
 // You can assign any duty_cycle for any PWM here, from 0-100
-uint32_t PWM_DutyCycle2  = 90;
+float PWM_DutyCycle2  = 90.0;
 
 // Channel number used to identify associated channel
 int channelNum;
