@@ -14,8 +14,8 @@
   #error This code is intended to run on the non-mbed RP2040 arduino-pico platform! Please check your Tools->Board setting.
 #endif
 
-#define RP2040_SLOW_PWM_VERSION_MIN_TARGET      "RP2040_Slow_PWM v1.2.0"
-#define RP2040_SLOW_PWM_VERSION_MIN             1002000
+#define RP2040_SLOW_PWM_VERSION_MIN_TARGET      "RP2040_Slow_PWM v1.2.1"
+#define RP2040_SLOW_PWM_VERSION_MIN             1002001
 
 #include "multiFileProject.h"
 
