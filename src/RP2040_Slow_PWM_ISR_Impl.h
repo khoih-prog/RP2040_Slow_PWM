@@ -12,13 +12,15 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.1.0
+  Version: 1.2.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      22/09/2021 Initial coding for RP2040-based boards using RP2040 arduino-pico core
   1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
   1.1.0   K Hoang      10/11/2021 Add functions to modify PWM settings on-the-fly
+  1.2.0   K Hoang      02/02/2022 Fix multiple-definitions linker error. Improve accuracy. Optimize code
+  1.2.1   K Hoang      03/03/2022 Fix `DutyCycle` and `New Period` display bugs. Display warning only when debug level > 3
 *****************************************************************************************************************************/
 
 #pragma once
@@ -233,7 +235,7 @@ bool RP2040_Slow_PWM_ISR::modifyPWMChannel_Period(const uint8_t& channelNum, con
   PWM[channelNum].newOnTime     = ( period * dutycycle ) / 100;
   
   PWM_LOGINFO0("Channel : ");      PWM_LOGINFO0(channelNum); 
-  PWM_LOGINFO0("\tNew Period : "); PWM_LOGINFO0(PWM[channelNum].newPeriod);
+  PWM_LOGINFO0("\t    Period : "); PWM_LOGINFO0(period);
   PWM_LOGINFO0("\t\tOnTime : ");   PWM_LOGINFO0(PWM[channelNum].newOnTime); 
   PWM_LOGINFO0("\tStart_Time : "); PWM_LOGINFOLN0(PWM[channelNum].prevTime);
   
